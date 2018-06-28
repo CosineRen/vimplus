@@ -64,12 +64,6 @@ set incsearch           " 开启实时搜索功能
 set ignorecase          " 搜索时大小写不敏感
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 代码折叠
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set foldmethod=syntax   " 设置基于语法进行代码折叠
-set nofoldenable        " 关闭折叠代码
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 缓存设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nobackup            " 设置不备份
@@ -87,27 +81,19 @@ set termencoding=utf-8
 set encoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 
-" 打开C/C++文件时，启用ycm补全插件，否则启用vcm
-let suffix = expand("%:e") 
-if suffix == "h" || suffix == "cpp" || suffix == "c"
-    let g:loaded_VimCompletesMe = 0
-else
-    let g:loaded_youcompleteme = 0
-endif
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 插件列表
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-Plug 'Valloric/YouCompleteMe'
-Plug 'ajh17/VimCompletesMe'
 Plug 'chxuan/cpp-mode'
 Plug 'chxuan/change-colorscheme'
 Plug 'chxuan/prepare-code'
 Plug 'chxuan/vim-buffer'
 Plug 'chxuan/vim-replace'
 Plug 'chxuan/vimplus-startify'
+Plug 'chxuan/tagbar'
+Plug 'Valloric/YouCompleteMe'
 Plug 'Yggdroot/LeaderF'
 Plug 'mileszs/ack.vim'
 Plug 'easymotion/vim-easymotion'
@@ -125,7 +111,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
-Plug 'majutsushi/tagbar'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -176,6 +161,9 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+" 打开文件自动定位到最后编辑的位置
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
+
 " 主题
 set background=dark
 let g:onedark_termcolors=256
@@ -196,7 +184,7 @@ let g:airline_right_alt_sep = ''
 " cpp-mode
 nnoremap <leader>y :CopyCode<cr>
 nnoremap <leader>p :PasteCode<cr>
-nnoremap <leader>U :GoToDefinition<cr>
+nnoremap <leader>U :GoToFunImpl<cr>
 nnoremap <silent> <leader>a :Switch<cr>
 nnoremap <leader><leader>fp :FormatFunParam<cr>
 nnoremap <leader><leader>if :FormatIf<cr>
