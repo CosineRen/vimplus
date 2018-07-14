@@ -1,17 +1,3 @@
-"
-"             __                __          
-"     __   __/_/___ ___  ____  / /_  _______
-"     \ \ / / / __ `__ \/ __ \/ / / / / ___/
-"      \ V / / / / / / / /_/ / / /_/ (__  )
-"       \_/_/_/ /_/ /_/ ,___/_/\____/____/
-"                    /_/
-"            
-"
-" Author: chxuan <787280310@qq.com>
-" Repository: https://github.com/chxuan/vimplus
-" Create Date: 2016-04-10
-" License: MIT
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -260,11 +246,6 @@ let g:ycm_semantic_triggers.c = ['->', '.', ' ', '(', '[', '&',']']
 let g:tagbar_width = 30
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 inoremap <silent> <leader>t <esc> :TagbarToggle<cr>
-
-" cpp_class_scope_highlight
-let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-let c_no_curly_error = 1
 
 " incsearch.vim
 map /  <Plug>(incsearch-forward)
