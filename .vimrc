@@ -35,6 +35,7 @@ set smarttab             " 在行和段开始处使用制表符
 set nowrap               " 禁止折行
 set backspace=2          " 使用回车键正常处理indent,eol,start等
 set sidescroll=10        " 设置向右滚动字符数
+set nofoldenable         " 禁用折叠代码
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码补全
@@ -73,10 +74,10 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 call plug#begin('~/.vim/plugged')
 
 Plug 'chxuan/cpp-mode'
+Plug 'chxuan/vim-edit'
 Plug 'chxuan/change-colorscheme'
 Plug 'chxuan/prepare-code'
 Plug 'chxuan/vim-buffer'
-Plug 'chxuan/vim-replace'
 Plug 'chxuan/vimplus-startify'
 Plug 'chxuan/tagbar'
 Plug 'Valloric/YouCompleteMe'
@@ -90,7 +91,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'rkulla/pydiction'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -100,7 +100,6 @@ Plug 'tpope/vim-endwise'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-scripts/txt.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/vim-slash'
 Plug 'junegunn/gv.vim'
@@ -111,7 +110,6 @@ Plug 'kana/vim-textobj-function'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'Shougo/echodoc.vim'
 Plug 'terryma/vim-smooth-scroll'
-Plug 'terryma/vim-expand-region'
 Plug 'rhysd/clever-f.vim'
 Plug 'rhysd/github-complete.vim'
 Plug 'yianwillis/vimcdoc'
@@ -132,9 +130,6 @@ nnoremap <leader>H :execute ":help " . expand("<cword>")<cr>
 
 " 重新加载vimrc文件
 nnoremap <leader>s :source $MYVIMRC<cr>
-
-" 复制当前到行末
-nnoremap Y y$
 
 " 安装、更新、删除插件
 nnoremap <leader><leader>i :PlugInstall<cr>
@@ -188,14 +183,17 @@ inoremap <silent> <F12> <esc> :ShowColorScheme<cr>
 " prepare-code
 let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
 
-" vim-replace
-nnoremap <leader>r :ReplaceTo<space>
-
 " vim-buffer
 nnoremap <silent> <c-p> :PreviousBuffer<cr>
 nnoremap <silent> <c-n> :NextBuffer<cr>
 nnoremap <silent> <leader>d :CloseBuffer<cr>
 nnoremap <silent> <leader>D :BufOnly<cr>
+
+" vim-edit
+nnoremap Y :CopyText<cr>
+nnoremap D :DeleteText<cr>
+nnoremap C :ChangeText<cr>
+nnoremap <leader>r :ReplaceTo<space>
 
 " nerdtree
 nnoremap <silent> <leader>n :NERDTreeToggle<cr>
@@ -210,11 +208,13 @@ let g:NERDTreeDirArrowCollapsible='▼'
 
 " YCM
 let g:ycm_confirm_extra_conf = 0 
-let g:ycm_error_symbol = '>>'
-let g:ycm_warning_symbol = '>*'
+let g:ycm_error_symbol = '✗'
+let g:ycm_warning_symbol = '✗'
 let g:ycm_seed_identifiers_with_syntax = 1 
 let g:ycm_complete_in_comments = 1 
 let g:ycm_complete_in_strings = 1 
+let g:ycm_server_python_interpreter = '/usr/bin/python'
+let g:ycm_python_binary_path = 'python'
 nnoremap <leader>u :YcmCompleter GoToDeclaration<cr>
 " 已经使用cpp-mode插件提供的转到函数实现的功能
 " nnoremap <leader>i :YcmCompleter GoToDefinition<cr> 
@@ -268,10 +268,6 @@ imap <silent> <F8> <Plug>StopMarkdownPreview
 let g:EasyMotion_smartcase = 1
 map <leader>w <Plug>(easymotion-bd-w)
 nmap <leader>w <Plug>(easymotion-overwin-w)
-
-" pydiction
-let g:pydiction_location='~/.vim/plugged/pydiction/complete-dict'
-let g:pydiction_menu_height=10
 
 " nerdtree-git-plugin
 let g:NERDTreeIndicatorMapCustom = {
